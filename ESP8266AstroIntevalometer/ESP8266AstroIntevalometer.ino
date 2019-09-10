@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
-#include <ArduinoJson.h>
 
 #define HTTP_REST_PORT 80
 #define WIFI_RETRY_DELAY 500
