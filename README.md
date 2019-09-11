@@ -1,6 +1,16 @@
 # ESP8266AstrophotographyIntervalometer
 An Astrophotography Intervalometer using an ESP8266 and a relay, configured using a ESP8266 Web Server
 
+Version 1
+Single Cell BMS for 18650 and single battery holder
+ESP-01S Relay module
+ESP8266
+
+Version 2
+Single Cell BMS for 18650 and single battery holder
+Wemos D1 Mini
+Arduino Relay module 
+
 PinOuts of the different camera manufacturers for the 2.5mm jack of the release
 http://www.doc-diy.net/photo/remote_pinout/
 
