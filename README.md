@@ -11,6 +11,8 @@ Single Cell BMS for 18650 and single battery holder
 Wemos D1 Mini  
 Arduino Relay module  
 
+The reason I use a relay is to keep the camera electrically isolated from the controller, just in case...  
+
 PinOuts of the different camera manufacturers for the 2.5mm jack of the release
 http://www.doc-diy.net/photo/remote_pinout/
 
