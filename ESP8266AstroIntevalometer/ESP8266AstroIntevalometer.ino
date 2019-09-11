@@ -9,6 +9,7 @@
 
 const char* wifi_ssid = "wewewe";
 const char* wifi_passwd = "1qazxsw2";
+String page("<html><head><title>ESP8266AstroIntervalometer</title></head><body><form action=\"/astropic\" method=\"post\" target=\"curstatus\">ExposureTime:<input type=\"text\" name=\"exptime\"><br>WaitTime:<input type=\"text\" name=\"waittime\"><br>NumberOfPics:<input type=\"text\" name=\"reps\"><br><select name=\"action\"><option value=\"Start\">Start</option><option value=\"Stop\">Stop</option></select><br><br><input type=\"submit\" value=\"Submit\"></form><form action=\"/astropic\" method=\"get\" target=\"curstatus\"><input type=\"submit\" value=\"GetStatus\"></form><iframe name=\"curstatus\" id=\"curstatus\"></iframe></div></body></html>");
 
 unsigned long timenow=0, picstart=0, cooloffstart=0; 
 
@@ -36,7 +37,7 @@ struct astroconf
   shutterstatus curshutterstatus;
 } astrojob;
 
-ESP8266WebServer http_rest_server(HTTP_REST_PORT);
+ESP8266WebServer intwebserver(HTTP_REST_PORT);
 
 String astroStatusToString(astrostatus dummyStat)
 {
@@ -80,6 +81,7 @@ String shutterStatusToString(shutterstatus dummyStat)
 
 void init_resource()
 {
+    Serial.println("Initializing resources");
     astrojob.exptime=0;
     astrojob.cooloff=0;
     astrojob.numPics=0;
@@ -106,55 +108,61 @@ int init_wifi() {
 
 void get_astropic()
 {  
+  Serial.println("Get Intervalometer status called");
   String message = "GET Config\n";
   message += "Status:"+astroStatusToString(astrojob.curstatus)+"\n";
   message += "Shutter:"+shutterStatusToString(astrojob.curshutterstatus)+"\n";
   message += "Pics:"+String(astrojob.picscomp)+"/"+String(astrojob.numPics)+"\n";
-  http_rest_server.send(200,"text/plain", message);
+  intwebserver.send(200,"text/plain", message);
 }
 
 void post_astropic(){
-  if (http_rest_server.args() == 0) {
-    http_rest_server.send(200,"text/plain", "ERROR: No Arguments");
+  Serial.println("Post Intervalometer Config called");
+  if (intwebserver.args() == 0) {
+    intwebserver.send(200,"text/plain", "ERROR: No Arguments");
   } else {
     String message = "POST CONFIGUIRING Number of args received:";
-    message += http_rest_server.args();
-    for (uint8_t i = 0; i < http_rest_server.args(); i++) {
-      message += " " + http_rest_server.argName(i) + ": " + http_rest_server.arg(i) + "\n";
+    message += intwebserver.args()+"\n";
+    for (uint8_t i = 0; i < intwebserver.args(); i++) {
+      message += " " + intwebserver.argName(i) + ": " + intwebserver.arg(i) + "\n";
     }
+    Serial.println(intwebserver.arg(4));
 
-    if(http_rest_server.arg(3).equals("Start"))
+    if(intwebserver.arg(3).equals("Start"))
     {
       astrojob.curstatus=RUNNING;
       astrojob.picscomp=0;
-      astrojob.exptime=http_rest_server.arg(0).toInt();
-      astrojob.cooloff=http_rest_server.arg(1).toInt();
-      astrojob.numPics=http_rest_server.arg(2).toInt();
+      astrojob.exptime=intwebserver.arg(0).toInt();
+      astrojob.cooloff=intwebserver.arg(1).toInt();
+      astrojob.numPics=intwebserver.arg(2).toInt();
     }
     else
     {
       astrojob.curstatus=STOPPED;
     }
-    http_rest_server.send(200,"text/plain", message);
+    intwebserver.send(200,"text/plain", message);
   }
   return;
 }
 
 void get_configpage(){
-  http_rest_server.send(200, "text/html", \
-  "<html><head><title>ESP8266AstroIntervalometer</title></head><body><form action=\"/astropic\" method=\"post\" target=\"curstatus\">ExposureTime:<input type=\"text\" name=\"exptime\"><br>WaitTime:<input type=\"text\" name=\"waittime\"><br>NumberOfPics:<input type=\"text\" name=\"reps\"><br><select name=\"action\"><option value=\"Start\">Start</option><option value=\"Stop\">Stop</option></select><br><br><input type=\"submit\" value=\"Submit\"></form><form action=\"/astropic\" method=\"get\" target=\"curstatus\"><input type=\"submit\" value=\"GetStatus\"></form><iframe name=\"curstatus\" id=\"curstatus\"></iframe></div></body></html>");
+  Serial.println("Serving main page");
+  intwebserver.send(200, "text/html", page);
   return;
 }
 
 void config_rest_server_routing() {
-    http_rest_server.on("/", HTTP_GET, get_configpage);
+    Serial.println("Registering web server paths");
 
-    http_rest_server.on("/astropic", HTTP_GET, get_astropic);
-    http_rest_server.on("/astropic", HTTP_POST, post_astropic);    
+    intwebserver.on("/", HTTP_GET, get_configpage);
+
+    intwebserver.on("/astropic", HTTP_GET, get_astropic);
+    intwebserver.on("/astropic", HTTP_POST, post_astropic);    
 }
 
 void setup(void) {
     Serial.begin(115200);
+    Serial.println("Initial Setup");
     init_resource();
     if (init_wifi() == WL_CONNECTED) {
         Serial.print("Connetted to ");
@@ -179,7 +187,7 @@ void setup(void) {
     }
     Serial.println("mDNS responder started");
     config_rest_server_routing();
-    http_rest_server.begin();
+    intwebserver.begin();
     Serial.println("HTTP REST Server Started");
 
     // Add service to MDNS-SD
@@ -189,6 +197,7 @@ void setup(void) {
 
 void openShutter()
 {
+    Serial.println("Open Shutter");
     digitalWrite(RELAY, HIGH);
     astrojob.curshutterstatus=SOPEN;
     picstart=millis();
@@ -196,10 +205,13 @@ void openShutter()
 
 void closeShutter()
 {
+    Serial.println("Close Shutter");
     digitalWrite(RELAY, LOW);
     astrojob.curshutterstatus=SCLOSED;
-    //Just finished another picture, count it.
-    astrojob.picscomp=astrojob.picscomp+1;
+    if(astrojob.curstatus==RUNNING){
+      //Just finished another picture, count it.
+      astrojob.picscomp=astrojob.picscomp+1;
+    }//No need to cound if we are stopping
     cooloffstart=millis();
 }
 
@@ -216,6 +228,7 @@ void doPics()
         //Need to convert millis to sec - multiply by 1000
         if((timenow-picstart)>=1000*astrojob.exptime) //we have finished the exposure
         {
+          Serial.println("Start Cool-off after "+String(timenow-picstart)+"ms");
           closeShutter();
           astrojob.curshutterstatus=COOLING; //start the cooloff
         }
@@ -225,14 +238,17 @@ void doPics()
         //Need to convert millis to sec - multiply by 1000
         if((timenow-cooloffstart)>=1000*astrojob.cooloff) //Cooloff has finished, start another picture
         {
+          Serial.println("Start Pic after cool off after "+String(timenow-cooloffstart)+"ms");
           openShutter();
         }
       }else{ //Shutter is closed, but we are in the middle of a run, start pic
+        Serial.println("Start First Pic");
         openShutter();     
       }
     }
     else //we hace finished a run, let's put status to stopped so we can stop everything
     {
+      Serial.println("Stopping");
       astrojob.curstatus=STOPPED;
     }
   }
@@ -240,6 +256,7 @@ void doPics()
   {
       if(astrojob.curshutterstatus!=SCLOSED)
       {
+        Serial.println("Make sure everything is closed");
         closeShutter();
       }
   }
@@ -247,6 +264,6 @@ void doPics()
 
 void loop(void) {
     MDNS.update();
-    http_rest_server.handleClient();
+    intwebserver.handleClient();
     doPics();
 }
