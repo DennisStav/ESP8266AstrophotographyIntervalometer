@@ -23,7 +23,7 @@ https://www.banggood.com/5-Pcs-TP4056-Micro-USB-5V-1A-Lithium-Battery-Charging-M
 ESP-01S Relay Module that I used - broken out-of-the-box
 https://www.banggood.com/ESP8266-ESP01-WIFI-Transceiver-Wireless-Module-USB-To-ESP8266-Serial-Adapter-Wireless-WIFI-Develoment-Board-p-1408866.html?rmmds=search&cur_warehouse=CN
   
-How to fix the cheap ESP8266 relay modules. 
+How to fix the cheap ESP-01S ESP8266 relay modules. 
 https://www.youtube.com/watch?v=Uq7ZfutOSSg 
 
 ESP8266
