@@ -6,6 +6,7 @@
 #define WIFI_RETRY_DELAY 500
 #define MAX_WIFI_INIT_RETRY 50
 #define RELAY 0 // relay connected to  GPIO0
+#define BUILTINLED 2
 
 const char* wifi_ssid = "wewewe";
 const char* wifi_passwd = "1qazxsw2";
@@ -88,6 +89,8 @@ void init_resource()
     astrojob.picscomp=0;
     astrojob.curstatus=STOPPED;
     pinMode(RELAY,OUTPUT);
+    pinMode(BUILTINLED,OUTPUT);
+    digitalWrite(BUILTINLED,HIGH);
     closeShutter();
 }
 
@@ -199,6 +202,7 @@ void openShutter()
 {
     Serial.println("Open Shutter");
     digitalWrite(RELAY, HIGH);
+    digitalWrite(BUILTINLED, LOW); //on the Wemos D1 mini this turn on the led
     astrojob.curshutterstatus=SOPEN;
     picstart=millis();
 }
@@ -207,6 +211,7 @@ void closeShutter()
 {
     Serial.println("Close Shutter");
     digitalWrite(RELAY, LOW);
+    digitalWrite(BUILTINLED, HIGH); //on the Wemos D1 mini this turn off the led
     astrojob.curshutterstatus=SCLOSED;
     if(astrojob.curstatus==RUNNING){
       //Just finished another picture, count it.
