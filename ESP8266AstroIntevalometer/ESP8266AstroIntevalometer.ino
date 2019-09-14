@@ -91,6 +91,7 @@ void init_resource()
     pinMode(RELAY,OUTPUT);
     pinMode(BUILTINLED,OUTPUT);
     digitalWrite(BUILTINLED,HIGH);
+    digitalWrite(RELAY,LOW);
     closeShutter();
 }
 
@@ -116,6 +117,9 @@ void get_astropic()
   message += "Status:"+astroStatusToString(astrojob.curstatus)+"\n";
   message += "Shutter:"+shutterStatusToString(astrojob.curshutterstatus)+"\n";
   message += "Pics:"+String(astrojob.picscomp)+"/"+String(astrojob.numPics)+"\n";
+  if(astrojob.curstatus==RUNNING){
+    message += "Pic:"+String(astrojob.picscomp+1)+" Sec:"+String((timenow-picstart)/1000)+"/"+String(astrojob.exptime)+"\n";
+  }
   intwebserver.send(200,"text/plain", message);
 }
 
