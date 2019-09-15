@@ -4,12 +4,21 @@
 
 #define HTTP_REST_PORT 80
 #define WIFI_RETRY_DELAY 500
-#define MAX_WIFI_INIT_RETRY 50
+#define MAX_WIFI_INIT_RETRY 20
 #define RELAY 0 // relay connected to  GPIO0
 #define BUILTINLED 2
 
-const char* wifi_ssid = "wewewe";
-const char* wifi_passwd = "1qazxsw2";
+#ifndef APSSID
+#define APSSID "ESP8266Astro"
+#define APPSK  "1qazxsw2"
+#endif
+
+/* Set these to your desired credentials. */
+const char *apssid = APSSID;
+const char *appassword = APPSK;
+
+const char* client_ssid = "wewewe";
+const char* client_passwd = "1qazxsw2";
 String page("<html><head><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>ESP8266AstroIntervalometer</title></head><body><div class=\"container\"><div class=\"row\"><form action=\"/astropic\" method=\"post\" target=\"curstatus\"><div class=\"row\">ExpTime:<input type=\"text\" name=\"exptime\"></div><div class=\"row\">WaitTime:<input type=\"text\" name=\"waittime\"></div><div class=\"row\">NumPics:<input type=\"text\" name=\"reps\"></div><div class=\"row\"><select name=\"action\"><option value=\"Start\">Start</option><option value=\"Stop\">Stop</option></select></div><div class=\"row\"><input type=\"submit\" value=\"Submit\"></div></form></div><div class=\"row\"><form action=\"/astropic\" method=\"get\" target=\"curstatus\"><input type=\"submit\" value=\"GetStatus\"></form></div><div class=\"row\"><iframe name=\"curstatus\" id=\"curstatus\"></iframe></div></body></html>");
 
 unsigned long timenow=0, picstart=0, cooloffstart=0; 
@@ -100,7 +109,7 @@ int init_wifi() {
 
     Serial.println("Connecting to WiFi AP..........");
     WiFi.mode(WIFI_STA);
-    WiFi.begin(wifi_ssid, wifi_passwd);
+    WiFi.begin(client_ssid, client_passwd);
     // check the status of WiFi connection to be WL_CONNECTED
     while ((WiFi.status() != WL_CONNECTED) && (retries < MAX_WIFI_INIT_RETRY)) {
         retries++;
@@ -108,6 +117,18 @@ int init_wifi() {
         Serial.print("#");
     }
     return WiFi.status(); // return the WiFi connection status
+}
+
+int init_wifiAP(){
+  Serial.print("Configuring access point:"+String(apssid));
+  /* You can remove the password parameter if you want the AP to be open. */
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(apssid, appassword);  
+  IPAddress myIP = WiFi.softAPIP();
+  Serial.print("AP statu:"+String(WiFi.status())+"\n");
+  Serial.print("AP IP address:");
+  Serial.println(myIP);
+  return WiFi.status();
 }
 
 void get_astropic()
@@ -173,13 +194,14 @@ void setup(void) {
     init_resource();
     if (init_wifi() == WL_CONNECTED) {
         Serial.print("Connetted to ");
-        Serial.print(wifi_ssid);
+        Serial.print(client_ssid);
         Serial.print("--- IP: ");
         Serial.println(WiFi.localIP());
-    }
-    else {
+    } else {
+        //Couldn't connect as client, setup our own AP.
         Serial.print("Error connecting to: ");
-        Serial.println(wifi_ssid);
+        Serial.println(client_ssid);
+        init_wifiAP();
     }
     // Set up mDNS responder:
     // - first argument is the domain name, in this example
