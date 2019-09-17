@@ -9,7 +9,7 @@ http://www.doc-diy.net/photo/remote_pinout/
 Got the body of the esp8266 web server from here
 https://mancusoa74.blogspot.com/2018/02/simple-http-rest-server-on-esp8266.html
 
-#Version 1 - Proof of Concept - Hacking it together with whatever I had.
+## Version 1 - Proof of Concept - Hacking it together with whatever I had.
 ESP8266 - 
 https://www.banggood.com/Upgraded-Version-1M-Flash-ESP8266-ESP-01-WIFI-Transceiver-Wireless-Module-p-979509.html?rmmds=search&cur_warehouse=CN  
 
@@ -21,7 +21,7 @@ How to fix the cheap ESP-01S ESP8266 relay modules - https://www.youtube.com/wat
 Single cell BMS for power
 https://www.banggood.com/5-Pcs-TP4056-Micro-USB-5V-1A-Lithium-Battery-Charging-Module-Board-TE585-Lipo-Charger-p-1255762.html?rmmds=search&cur_warehouse=CN
 
-#Version 2 - nicer setup with plug together components
+## Version 2 - nicer setup with plug together components
 Wemos D1 Mini base Build Bill Of Materials  
 Controller - https://grobotronics.com/wemos-d1-mini-pro-esp8266-v1.0.html  
 Battery Shield - https://grobotronics.com/wemos-d1-mini-battery-shield.html  
