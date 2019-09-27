@@ -57,9 +57,10 @@ If you want to see what the status of photo taking is, press the GetStatus butto
 <img src="photos/GetStatus.png" alt="Getting Status" width="250"/>
 </div>
   
-I put everything in a box to make it more secure. 
+<div>  
+I put everything in a box to make it more secure.<br>
 <img src="photos/InABox.jpg " alt="All In a Box" width="250"/>
-
+</div>
 
 
 
