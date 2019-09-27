@@ -46,13 +46,16 @@ Of course you can edit the code and change these things.
 So either you connect your smartphone to the same wifi AP or connect to the initiated access point. 
 In order to access the control page, type http://esp8266astro to a Bonjour enabled browser or download BonjourBrowers on your Android device (https://play.google.com/store/apps/details?id=de.wellenvogel.bonjourbrowser)  
 
+<div>
 Once you connect to the webpage, insert values for Exposure, between photos wait time and number of pics, select Start from the drop down menu and press submit. If you want to stop, select Stop from the drop down menu and press Submit. 
+<img src="photos/StartRun.png" alt="Starting Intervalometer" width="300"/>
+</div>  
 
-<img src="photos/StartRun.png" alt="Starting Intervalometer" width="250"/>
-
+<div>
 If you want to see what the status of photo taking is, press the GetStatus button.
 <img src="photos/GetStatus.png" alt="Getting Status" width="250"/>
-
+</div>
+  
 I put everything in a box to make it more secure. 
 <img src="photos/InABox.jpg " alt="All In a Box" width="250"/>
 
