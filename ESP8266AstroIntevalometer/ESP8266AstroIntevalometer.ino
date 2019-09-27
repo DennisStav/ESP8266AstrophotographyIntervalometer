@@ -5,7 +5,9 @@
 #define HTTP_REST_PORT 80
 #define WIFI_RETRY_DELAY 500
 #define MAX_WIFI_INIT_RETRY 20
-#define RELAY 0 // relay connected to  GPIO0
+#define RELAY 5 // relay shield connected to GPIO5 for D1 mini
+//#define RELAY 0 // relay connected to GPIO0 for ESP01
+
 #define BUILTINLED 2
 
 #ifndef APSSID
@@ -92,6 +94,8 @@ String shutterStatusToString(shutterstatus dummyStat)
 void init_resource()
 {
     Serial.println("Initializing resources");
+//    Serial.print("MyBoard is:");
+//    Serial.println(MYBOARD);
     astrojob.exptime=0;
     astrojob.cooloff=0;
     astrojob.numPics=0;

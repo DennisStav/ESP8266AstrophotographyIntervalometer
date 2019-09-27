@@ -29,3 +29,5 @@ Relay Shield - https://grobotronics.com/wemos-d1-mini-relay-shield.html
 Battery - https://grobotronics.com/polymer-lithium-ion-battery-3.7v-1200mah.html  
 
 Additionally you need a 2.5mm female jack and some wire.
+
+![Wemos Schematic](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/WemosSchematic.png)
