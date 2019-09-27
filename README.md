@@ -52,7 +52,7 @@ Once you connect to the webpage, insert values for Exposure, between photos wait
 </div>  
 
 <div>
-If you want to see what the status of photo taking is, press the GetStatus button.
+If you want to see what the status of photo taking is, press the GetStatus button.  
 <img src="photos/GetStatus.png" alt="Getting Status" width="250"/>
 </div>
   
