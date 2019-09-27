@@ -30,4 +30,35 @@ Battery - https://grobotronics.com/polymer-lithium-ion-battery-3.7v-1200mah.html
 
 Additionally you need a 2.5mm female jack and some wire.
 
-![Wemos Schematic](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/WemosSchematic.png)
+![Wemos Schematic](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/WemosSchematic.png)  
+
+## Usage
+Once you turn on the Wemos, it will try to connect to a network with:  
+SSID: wewewe
+PASS: 1qazxsw2    
+  
+If it cannot connect to the network  within 10 seconds, then it will start an access point with:  
+SSID: ESP8266Astro
+PASS: 1qazxsw2  
+
+Of course you can edit the code and change these things.  
+
+So either you connect your smartphone to the same wifi AP or connect to the initiated access point. 
+In order to access the control page, type http://esp8266astro to a Bonjour enabled browser or download BonjourBrowers on your Android device (https://play.google.com/store/apps/details?id=de.wellenvogel.bonjourbrowser)  
+
+Once you connect to the webpage, insert values for Exposure, between photos wait time and number of pics, select Start from the drop down menu and press submit. If you want to stop, select Stop from the drop down menu and press Submit. 
+
+![Starting Intervalometer](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/StartRun.png)  
+
+If you want to see what the status of photo taking is, press the GetStatus button.
+![Getting Status](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/GetStatus.png) 
+
+I put everything in a box to make it more secure. 
+![All In a Box](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/InABox.jpg) 
+ 
+
+
+
+
+
+
