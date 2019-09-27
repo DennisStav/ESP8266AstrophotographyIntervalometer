@@ -49,8 +49,8 @@ In order to access the control page, type http://esp8266astro to a Bonjour enabl
 <div>
 Once you connect to the webpage, insert values for Exposure, between photos wait time and number of pics, select Start from the drop down menu and press submit. If you want to stop, select Stop from the drop down menu and press Submit. 
 <img src="photos/StartRun.png" alt="Starting Intervalometer" width="300"/>
-</div>  
-
+<br></div>  
+    
 <div>
 If you want to see what the status of photo taking is, press the GetStatus button.  
 <img src="photos/GetStatus.png" alt="Getting Status" width="250"/>
