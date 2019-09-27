@@ -48,13 +48,13 @@ In order to access the control page, type http://esp8266astro to a Bonjour enabl
 
 Once you connect to the webpage, insert values for Exposure, between photos wait time and number of pics, select Start from the drop down menu and press submit. If you want to stop, select Stop from the drop down menu and press Submit. 
 
-![Starting Intervalometer](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/StartRun.png)  
+![Starting Intervalometer](photos/StartRun.png =250x)  
 
 If you want to see what the status of photo taking is, press the GetStatus button.
-![Getting Status](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/GetStatus.png) 
+![Getting Status](photos/GetStatus.png =250x) 
 
 I put everything in a box to make it more secure. 
-![All In a Box](https://github.com/DennisStav/ESP8266AstrophotographyIntervalometer/blob/master/photos/InABox.jpg) 
+![All In a Box](photos/InABox.jpg =250x) 
  
 
 
