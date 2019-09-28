@@ -51,7 +51,7 @@ I put everything in a box to make it more secure.<br>
 <img src="photos/InABox.jpg " alt="All In a Box" width="250"/>
 </div>
 
-## Event cheaper version - Hacking it together. 
+## Even cheaper version - Hacking it together. 
 ESP8266 - 
 https://www.banggood.com/Upgraded-Version-1M-Flash-ESP8266-ESP-01-WIFI-Transceiver-Wireless-Module-p-979509.html?rmmds=search&cur_warehouse=CN  
 
